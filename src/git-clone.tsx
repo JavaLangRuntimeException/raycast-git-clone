@@ -5,16 +5,12 @@ import * as path from "path";
 import { useState, useEffect } from "react";
 import { Octokit } from "@octokit/rest";
 import fetch from 'node-fetch';
-import dotenv from 'dotenv';
 
 
-// .envファイルを読み込む
-dotenv.config();
 
-// 環境変数から値を取得
-const PERSONAL_ACCESS_TOKEN = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
-const DEFAULT_CLONE_PATH = process.env.DEFAULT_CLONE_PATH;
-
+//ここに任意で設定して
+const PERSONAL_ACCESS_TOKEN = "yourtoken";
+const DEFAULT_CLONE_PATH = "yourpath";
 interface Repository {
   fullName: string;
   name: string;
@@ -103,7 +99,7 @@ function RepositoryList({ owner }: { owner: string }) {
 }
 
 function CloneForm({ repository }: { repository: Repository }) {
-  const [directory, setDirectory] = useState("/Users/taramanjimacbookpro/GitHub");
+  const [directory, setDirectory] = useState(DEFAULT_CLONE_PATH);
   const [branch, setBranch] = useState("");
   const [branches, setBranches] = useState<Branch[]>([]);
   const [isLoadingBranches, setIsLoadingBranches] = useState(true);
@@ -181,9 +177,9 @@ function CloneForm({ repository }: { repository: Repository }) {
           <Form.Dropdown.Item key={b.name} value={b.name} title={b.name} />
         ))}
       </Form.Dropdown>
-      <Form.Description text="クローン先のディレクトリを選択してください" />
+      <Form.Description text="クローン先のディレクトリとクローンするブランチを選択してください" />
       <Form.Separator />
-      <Form.Description text={`リポジトリ: ${repository.fullName}`} />
+      <Form.Description text={`クローンするリポジトリ: ${repository.fullName}`} />
     </Form>
   );
 }
