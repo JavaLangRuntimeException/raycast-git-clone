@@ -4,9 +4,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { useState, useEffect } from "react";
 import { Octokit } from "@octokit/rest";
-import fetch from 'node-fetch';
-
-
+import fetch from "node-fetch";
 
 const preferences = getPreferenceValues();
 const PERSONAL_ACCESS_TOKEN = preferences.personalAccessToken as string;
@@ -31,11 +29,11 @@ async function fetchBranches(owner: string, repo: string): Promise<Branch[]> {
   const octokit = new Octokit({
     auth: PERSONAL_ACCESS_TOKEN,
     request: {
-      fetch: fetch
-    }
+      fetch: fetch,
+    },
   });
   const response = await octokit.repos.listBranches({ owner, repo });
-  return response.data.map(branch => ({ name: branch.name }));
+  return response.data.map((branch) => ({ name: branch.name }));
 }
 
 function RepositoryList({ owner }: { owner: string }) {
@@ -50,8 +48,8 @@ function RepositoryList({ owner }: { owner: string }) {
         const octokit = new Octokit({
           auth: PERSONAL_ACCESS_TOKEN,
           request: {
-            fetch: fetch
-          }
+            fetch: fetch,
+          },
         });
         let repos;
         if (owner === "personal") {
@@ -166,20 +164,14 @@ function CloneForm({ repository }: { repository: Repository }) {
         value={directory}
         onChange={setDirectory}
       />
-      <Form.Dropdown
-        id="branch"
-        title="Branch"
-        value={branch}
-        onChange={setBranch}
-        isLoading={isLoadingBranches}
-      >
+      <Form.Dropdown id="branch" title="Branch" value={branch} onChange={setBranch} isLoading={isLoadingBranches}>
         {branches.map((b) => (
           <Form.Dropdown.Item key={b.name} value={b.name} title={b.name} />
         ))}
-    </Form.Dropdown>
-    <Form.Description text="Please select the clone destination directory and the branch to clone" />
-    <Form.Separator />
-    <Form.Description text={`Repository to clone: ${repository.fullName}`} />
+      </Form.Dropdown>
+      <Form.Description text="Please select the clone destination directory and the branch to clone" />
+      <Form.Separator />
+      <Form.Description text={`Repository to clone: ${repository.fullName}`} />
     </Form>
   );
 }
@@ -196,14 +188,14 @@ export default function Command() {
         const octokit = new Octokit({
           auth: PERSONAL_ACCESS_TOKEN,
           request: {
-            fetch: fetch
-          }
+            fetch: fetch,
+          },
         });
         const orgs = await octokit.orgs.listForAuthenticatedUser();
-        const formattedOrgs: Organization[] = orgs.data.map(org => ({
+        const formattedOrgs: Organization[] = orgs.data.map((org) => ({
           login: org.login,
           name: org.login,
-          description: org.description
+          description: org.description,
         }));
         setOrganizations(formattedOrgs);
       } catch (error) {
