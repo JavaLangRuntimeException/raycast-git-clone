@@ -7,7 +7,12 @@
 
 /* eslint-disable @typescript-eslint/ban-types */
 
-type ExtensionPreferences = {}
+type ExtensionPreferences = {
+  /** GitHub Personal Access Token - Your GitHub Personal Access Token */
+  "personalAccessToken": string,
+  /** Default Clone Path - Default directory to clone repositories */
+  "defaultClonePath": string
+}
 
 /** Preferences accessible in all the extension's commands */
 declare type Preferences = ExtensionPreferences

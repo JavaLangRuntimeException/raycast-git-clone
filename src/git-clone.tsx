@@ -1,4 +1,4 @@
-import { List, ActionPanel, Action, showToast, Toast, useNavigation, Form } from "@raycast/api";
+import { List, ActionPanel, Action, showToast, Toast, useNavigation, Form, getPreferenceValues } from "@raycast/api";
 import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
@@ -8,9 +8,9 @@ import fetch from 'node-fetch';
 
 
 
-//ここに任意で設定して
-const PERSONAL_ACCESS_TOKEN = "yourtoken";
-const DEFAULT_CLONE_PATH = "yourpath";
+const preferences = getPreferenceValues();
+const PERSONAL_ACCESS_TOKEN = preferences.personalAccessToken as string;
+const DEFAULT_CLONE_PATH = preferences.defaultClonePath as string;
 interface Repository {
   fullName: string;
   name: string;
@@ -176,10 +176,10 @@ function CloneForm({ repository }: { repository: Repository }) {
         {branches.map((b) => (
           <Form.Dropdown.Item key={b.name} value={b.name} title={b.name} />
         ))}
-      </Form.Dropdown>
-      <Form.Description text="クローン先のディレクトリとクローンするブランチを選択してください" />
-      <Form.Separator />
-      <Form.Description text={`クローンするリポジトリ: ${repository.fullName}`} />
+    </Form.Dropdown>
+    <Form.Description text="Please select the clone destination directory and the branch to clone" />
+    <Form.Separator />
+    <Form.Description text={`Repository to clone: ${repository.fullName}`} />
     </Form>
   );
 }
@@ -224,7 +224,7 @@ export default function Command() {
   return (
     <List isLoading={isLoading}>
       <List.Item
-        title="Personal Repositories"
+        title="MyRepo_and_OwnerRepo"
         actions={
           <ActionPanel>
             <Action title="Select" onAction={() => push(<RepositoryList owner="personal" />)} />

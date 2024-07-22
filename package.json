@@ -17,6 +17,22 @@
       "mode": "view"
     }
   ],
+  "preferences": [
+    {
+      "name": "personalAccessToken",
+      "type": "password",
+      "required": true,
+      "title": "GitHub Personal Access Token",
+      "description": "Your GitHub Personal Access Token"
+    },
+    {
+      "name": "defaultClonePath",
+      "type": "directory",
+      "required": true,
+      "title": "Default Clone Path",
+      "description": "Default directory to clone repositories"
+    }
+  ],
   "dependencies": {
     "@octokit/rest": "^21.0.1",
     "@raycast/api": "^1.38.2",
